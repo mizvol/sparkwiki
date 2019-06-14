@@ -108,14 +108,18 @@ object DumpProcessor  {
     val redirect_id = dp.mergeRedirect(pageDf, redirectDf)                          
     //dumpParser.writeCsv(redirect_id.toDF, redirectOutput)
     val pglinks_noredirect = dp.resolvePageRedirects(pagelinks_id, redirect_id, normal_pages.union(cat_pages))
-    dumpParser.writeCsv(pglinks_noredirect, pageLinksOutput)
+    // dumpParser.writeCsv(pglinks_noredirect, pageLinksOutput)
+    dumpParser.writeParquet(pglinks_noredirect, pageLinksOutput)
    
     val catlinks_id = dp.mergeCategoryLinks(pageDf, cat_pages, categoryLinksDf)
-    dumpParser.writeCsv(catlinks_id.toDF, categoryLinksOutput)
-    dumpParser.writeCsv(cat_pages.toDF, pageOutput.resolve("category_pages").toString)
+    // dumpParser.writeCsv(catlinks_id.toDF, categoryLinksOutput)
+    // dumpParser.writeCsv(cat_pages.toDF, pageOutput.resolve("category_pages").toString)
+    dumpParser.writeParquet(catlinks_id.toDF, categoryLinksOutput)
+    dumpParser.writeParquet(cat_pages.toDF, pageOutput.resolve("category_pages").toString)
     
     
-    dumpParser.writeCsv(normal_pages.toDF, pageOutput.resolve("normal_pages").toString)
+    // dumpParser.writeCsv(normal_pages.toDF, pageOutput.resolve("normal_pages").toString)
+    dumpParser.writeParquet(normal_pages.toDF, pageOutput.resolve("normal_pages").toString)
     
     
   }
